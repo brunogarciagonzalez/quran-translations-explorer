@@ -16,23 +16,18 @@ ActiveRecord::Schema.define(version: 2018_09_02_214932) do
     t.integer "translation_id"
     t.integer "number"
     t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "translations", force: :cascade do |t|
     t.string "author"
     t.string "language"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "verses", force: :cascade do |t|
+    t.integer "canonical_verse_id"
     t.integer "chapter_id"
     t.integer "number"
     t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

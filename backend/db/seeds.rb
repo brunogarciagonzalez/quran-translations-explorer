@@ -46,7 +46,8 @@ def translation_instantiator(author_name, translation_language, translation_file
 
   current_chapter = nil
 
-  last_line = nil
+  canonical_verse_number_counter = 1
+
   File.open( translation_filepath ).each do |line|
     if line == "\n"
       puts "**************"
@@ -68,8 +69,8 @@ def translation_instantiator(author_name, translation_language, translation_file
     end
 
     # need to produce instances of Verse with current_chapter as its chapter
-    Verse.create(chapter_id: current_chapter.id, number: verse_number, content: verse_content)
-
+    Verse.create(chapter_id: current_chapter.id, number: verse_number, content: verse_content, canonical_verse_id: canonical_verse_number_counter)
+    canonical_verse_number_counter += 1
     puts "Added to DB [file #{progress_counter} of #{progress_denominator}]:: Translation: #{author_name} (#{translation_language}), Chapter: #{chapter_number} (#{chapter_title}), Verse #{verse_number}."
   end
 
