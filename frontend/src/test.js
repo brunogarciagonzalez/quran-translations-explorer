@@ -14,7 +14,6 @@ function init() {
   let root = document.getElementById("root");
   root.appendChild(form);
   form.addEventListener("submit", toBackend);
-  // display results
 }
 
 function toBackend(event) {
@@ -28,6 +27,7 @@ function toBackend(event) {
   })
     .then(r => r.json())
     .then(json => {
+      // display results
       debugger;
       console.log(json);
     });
