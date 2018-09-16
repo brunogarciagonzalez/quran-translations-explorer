@@ -9,9 +9,9 @@ class QueriesController < ApplicationController
     verses_with_match = find_verses_with_match(search_term, search_language)
 
     # group based on chapter
-    verses_with_match = group_by_chapter(verses_with_match)
+    matched_verses_grouped_by_chapter = group_by_chapter(verses_with_match)
 
-    render json: verses_with_match
+    render json: matched_verses_grouped_by_chapter
     # ^^ may want to serialize this in some way to include Translation info
   end
 
