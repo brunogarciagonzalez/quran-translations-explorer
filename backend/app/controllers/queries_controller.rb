@@ -3,32 +3,16 @@ class QueriesController < ApplicationController
   def query
     search_term = strong_query_params[:term]
     search_language = strong_query_params[:language]
-    # given a search term and a language, find all verses that include either search term or pluralized/singularized alternative
+    # given a search term and a language, find all verses that include search_term
+    # currently deos not search for pluralized/singularized alternative
 
-    # to minimize search iterations, first filter via translation language
-
-    verses_with_match = {}
-
-    Translation.all.each do |translation|
-      if translation.language.downcase == search_language.downcase
-        translation.chapters.each do |chapter|
-          chapter.verses.each do |verse|
-            # check for both search term and pluralized/singularized alternative
-              # pluralization/singularization of multiple-word-terms is more complex
-                # for now match on all downcase, except ALLAH
-            if verse.content.downcase.include?(search_term.downcase)
-              verses_with_match = add_verse_to_map(verses_with_match, verse)
-            end
-          end
-        end
-      end
-    end
-
+    verses_with_match = find_verses_with_match(search_term, search_language)
 
     # group based on chapter
     verses_with_match = group_by_chapter(verses_with_match)
+
     render json: verses_with_match
-    # may want to serialize this in some way to include Translation info
+    # ^^ may want to serialize this in some way to include Translation info
   end
 
   private
@@ -37,7 +21,7 @@ class QueriesController < ApplicationController
   end
 
   def add_verse_to_map(map_obj, verse_obj)
-    # group based on canonical_verse_id, then group those based on chapter_id?
+    # group based on canonical_verse_id
     shallow_clone = {
       translation: verse_obj.chapter.translation,
       canonical_verse_id: verse_obj.canonical_verse_id,
@@ -55,7 +39,7 @@ class QueriesController < ApplicationController
   end
 
   def group_by_chapter(verse_obj)
-    # already grouped by canonical_verse_id, now group based on chapter
+    # already grouped by canonical_verse_id, now group based on chapter_id
     output_obj = {}
 
     verse_obj.each do |canonical_id, verses_array|
@@ -65,12 +49,9 @@ class QueriesController < ApplicationController
       # {title: chapter.title, verses: []}
 
       if output_obj[chapter.number]
-
           output_obj[chapter.number][:verses_data][example_target_verse.number] = {}
           output_obj[chapter.number][:verses_data][example_target_verse.number][:canonical_id] = canonical_id
           output_obj[chapter.number][:verses_data][example_target_verse.number][:verses] = verses_array
-
-
       else
         output_obj[chapter.number] = {}
         output_obj[chapter.number][:title] = chapter.title
@@ -79,6 +60,27 @@ class QueriesController < ApplicationController
         output_obj[chapter.number][:verses_data][example_target_verse.number] = {}
         output_obj[chapter.number][:verses_data][example_target_verse.number][:canonical_id] = canonical_id
         output_obj[chapter.number][:verses_data][example_target_verse.number][:verses] = verses_array
+      end
+    end
+    output_obj
+  end
+
+
+  def find_verses_with_match(search_term, search_language)
+    output_obj = {}
+
+    Translation.all.each do |translation|
+      if translation.language.downcase == search_language.downcase
+        translation.chapters.each do |chapter|
+          chapter.verses.each do |verse|
+            # check for both search term and pluralized/singularized alternative
+              # pluralization/singularization of multiple-word-terms is more complex
+                # for now match on all downcase, except ALLAH
+            if verse.content.downcase.include?(search_term.downcase)
+              output_obj = add_verse_to_map(output_obj, verse)
+            end
+          end
+        end
       end
     end
     output_obj
