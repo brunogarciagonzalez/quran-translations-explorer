@@ -12,7 +12,6 @@ class QueriesController < ApplicationController
     matched_verses_grouped_by_chapter = group_by_chapter(verses_with_match)
 
     render json: matched_verses_grouped_by_chapter
-    # ^^ may want to serialize this in some way to include Translation info
   end
 
   private
@@ -22,6 +21,7 @@ class QueriesController < ApplicationController
 
   def add_verse_to_map(map_obj, verse_obj)
     # group based on canonical_verse_id
+    # include translation info
     shallow_clone = {
       translation: verse_obj.chapter.translation,
       canonical_verse_id: verse_obj.canonical_verse_id,
@@ -73,9 +73,10 @@ class QueriesController < ApplicationController
       if translation.language.downcase == search_language.downcase
         translation.chapters.each do |chapter|
           chapter.verses.each do |verse|
-            # check for both search term and pluralized/singularized alternative
-              # pluralization/singularization of multiple-word-terms is more complex
-                # for now match on all downcase, except ALLAH
+            # current version of this code is a simple downcase inclusion check
+            # In the future, hopefully can:
+              # check for both search term and pluralized/singularized alternative
+              # keep Names of ALLAH unmanipulated, or upcased, as is what is proper in my opinion
             if verse.content.downcase.include?(search_term.downcase)
               output_obj = add_verse_to_map(output_obj, verse)
             end
