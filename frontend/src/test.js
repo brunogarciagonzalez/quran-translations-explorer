@@ -28,7 +28,7 @@ function toBackend(event) {
     .then(r => r.json())
     .then(json => {
       // display results
-      debugger;
       console.log(json);
+      // debugger;
     });
 }
