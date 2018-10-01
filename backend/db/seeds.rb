@@ -12,8 +12,6 @@ Verse.destroy_all
 Chapter.destroy_all
 Translation.destroy_all
 
-
-
 puts "**************"
 
 
