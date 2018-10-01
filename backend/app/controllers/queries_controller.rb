@@ -1,10 +1,18 @@
+# to do:
+# - make it so that if search_term is multiple words, intial search to backend is for
+# ...the search_term, but once that fetch resolves, alter search term (in front end) by
+# ... emplying JS's Array.prototype.splice() and removing one word, iteratively as it goes
+# ... though the search term and thus provides something similar to results when
+# ... googling :"ruby docs gem splice" . see 'Missing: x' in a search result
+
 class QueriesController < ApplicationController
 
   def query
     search_term = strong_query_params[:term]
     search_language = strong_query_params[:language]
     # given a search term and a language, find all verses that include search_term
-    # currently deos not search for pluralized/singularized alternative
+    # currently does not search for pluralized/singularized alternative...
+    # ... because search term can be multiple words
 
     verses_with_match = find_verses_with_match(search_term, search_language)
 
