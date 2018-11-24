@@ -1,4 +1,4 @@
-# to do:
+# TODO:
 # - make it so that if search_term is multiple words, intial search to backend is for
 # ...the search_term, but once that fetch resolves, alter search term (in front end) by
 # ... emplying JS's Array.prototype.splice() and removing one word, iteratively as it goes
@@ -13,7 +13,7 @@ class QueriesController < ApplicationController
     search_term = strong_query_params[:term]
     search_language = strong_query_params[:language]
     # given a search term and a language, find all verses that include search_term
-    # currently does not search for pluralized/singularized alternative...
+    # TODO: currently does not search for pluralized/singularized alternative...
     # ... because search term can be multiple words
 
     verses_with_match = find_verses_with_match(search_term, search_language)
@@ -84,7 +84,7 @@ class QueriesController < ApplicationController
         translation.chapters.each do |chapter|
           chapter.verses.each do |verse|
             # current version of this code is a simple downcase inclusion check
-            # In the future, hopefully can:
+            # TODO: In the future, hopefully can:
               # check for both search term and pluralized/singularized alternative
               # keep Names of ALLAH unmanipulated, or upcased, as is what is proper in my opinion
             if verse.content.downcase.include?(search_term.downcase)
