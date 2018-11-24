@@ -5,6 +5,8 @@
 # ... though the search term and thus provides something similar to results when
 # ... googling :"ruby docs gem splice" . see 'Missing: x' in a search result
 
+# - make it so can search for search_term_x && search_term_y, meaning both terms are in same verse but there is no need for terms / words to be directly next to each other
+
 class QueriesController < ApplicationController
 
   def query
