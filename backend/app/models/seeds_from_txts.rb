@@ -31,7 +31,8 @@ class SeedsFromTxts
 
   end
 
-
+  private
+  
   def translation_instantiator(author_name, translation_language, translation_filepath, progress_counter, progress_denominator)
     # need to produce an instance of Translation
     current_translation = Translation.create(author: author_name, language: translation_language)
@@ -90,13 +91,6 @@ class SeedsFromTxts
     txt_file_line.split("|")[1]
   end
 
-
-  def chapter_title_getter(chapter_number)
-    # returns chapter_title based on chapter_number
-    url = "http://api.alquran.cloud/surah/#{chapter_number}"
-    JSON.parse(RestClient.get(url))["data"]["englishName"]
-  end
-
   def author_name_parser(name_string)
     # example: "Mohammad_Habib_Shakir"
     #split on underscore, join with space
@@ -105,19 +99,6 @@ class SeedsFromTxts
 
   def language_formatter(language_string)
     language_string.capitalize
-  end
-
-  def chapter_title_mapper
-    puts "Getting Quran chapter titles..."
-    output = {}
-
-    (1..114).to_a.each do |num|
-      name = chapter_title_getter(num)
-      output[num] = name
-      puts "Just got ##{num} of 114"
-    end
-    puts "finished getting Quran chapter titles!"
-    output
   end
 
   def chapter_title_map
