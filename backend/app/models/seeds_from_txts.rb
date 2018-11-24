@@ -19,20 +19,20 @@ class SeedsFromTxts
       # do work on files ending in .txt in the 'texts directory
       # example of txt_file_path: "../texts/english.Mohammad_Habib_Shakir.txt"
 
-      author_name = self.author_name_parser(txt_file_path.split("/")[2].split(".")[1])
+      author_name = author_name_parser(txt_file_path.split("/")[2].split(".")[1])
 
-      translation_language = self.language_formatter(txt_file_path.split("/")[2].split(".")[0])
+      translation_language = language_formatter(txt_file_path.split("/")[2].split(".")[0])
 
       translation_filepath = txt_file_path
 
-      self.translation_instantiator(author_name, translation_language, translation_filepath, progress_counter, progress_denominator)
+      translation_instantiator(author_name, translation_language, translation_filepath, progress_counter, progress_denominator)
       progress_counter += 1
     end
 
   end
 
   private
-  
+
   def translation_instantiator(author_name, translation_language, translation_filepath, progress_counter, progress_denominator)
     # need to produce an instance of Translation
     current_translation = Translation.create(author: author_name, language: translation_language)
@@ -48,11 +48,11 @@ class SeedsFromTxts
         puts "**************"
         return
       end
-      chapter_number = self.chapter_number_parser(line)
+      chapter_number = chapter_number_parser(line)
       integer_chapter_num = chapter_number.to_i
-      chapter_title = self.chapter_title_map[chapter_number.to_i]
-      verse_number = self.verse_number_parser(line)
-      verse_content = self.verse_content_parser(line)
+      chapter_title = chapter_title_map[chapter_number.to_i]
+      verse_number = verse_number_parser(line)
+      verse_content = verse_content_parser(line)
 
       # check to see if chapter is same as last iteration
       # if not, then need to produce new instance of Chapter
