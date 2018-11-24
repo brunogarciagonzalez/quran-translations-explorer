@@ -1,5 +1,6 @@
-# each html file to be parsed is acquired from:
+# each html file set (translation & footnotes) to be parsed is acquired from:
 # "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}.html"
+# "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}fn.html"
 
 require "byebug"
 require "nokogiri"
@@ -13,11 +14,13 @@ class SeedsFromMasjidTucson #likely will need to change class name once data is 
     # produce a hash of all of the data, so that seeding can work independently of internet
     (1..114).to_a.map do |num|
 
-      chapter_translation_text_array = chapter_translation_parser(num)
+      # TODO: the below array needs to conform to model array at bottom of file
+      chapter_translation_verses_array = chapter_translation_parser(num)
 
-      chapter_footnotes_text_array = chapter_footnotes_parser(num)
+      # TODO: the below array needs to conform to model array at bottom of file
+      chapter_footnotes_array = chapter_footnotes_parser(num)
 
-      parsed_chapter_info_to_hash(chapter_translation_text_array, chapter_footnotes_text_array)
+      parsed_chapter_info_to_hash(chapter_translation_verses_array, chapter_footnotes_array)
     end
 
   end
@@ -25,7 +28,10 @@ class SeedsFromMasjidTucson #likely will need to change class name once data is 
   private
 
   def parsed_chapter_info_to_hash(chapter_translation_array, chapter_footnotes_array)
-  
+    # need access to chapter_num, should have access to verse_num already
+    # => should get verse_num during execution of #chapter_translation_parser and #chapter_footnotes_parser
+    # for footnotes appears will be trickier because beginning of strings is not consistent (e.g. [1:1])
+    byebug
   end
 
   def chapter_translation_parser(chapter_number)
@@ -48,12 +54,12 @@ class SeedsFromMasjidTucson #likely will need to change class name once data is 
   def chapter_footnotes_parser(chapter_number)
     # chapter footnotes related
     chapter_footnotes_document = Nokogiri::HTML.parse(open(ch_fn_url_constructor(chapter_number)))
-    chapter_footnotes_document.css("p, table").map do |html|
-      if html.name == "p"
-        html.inner_text.split(/[\r\n\t]/).join("")
+    chapter_footnotes_document.css("p, table").map do |footnote_html|
+      if footnote_html.name == "p"
+        footnote_html.inner_text.split(/[\r\n\t]/).join("")
       else
         # only footnotes for chapter 1 translation has table, so this can be very specific parsing
-        "<table>" +  html.inner_html.split(/[\r\n\s]/).join("") + "</table>"
+        "<table>" +  footnote_html.inner_html.split(/[\r\n\s]/).join("") + "</table>"
       end
     end
   end
@@ -71,23 +77,20 @@ class SeedsFromMasjidTucson #likely will need to change class name once data is 
 end
 
 
-
-# { chapter_num: {
-#     translation_url: "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}.html",
-#     verses: [
-#       { verse_num: {
-#           text: "",
-#           link_to_footnotes: true || false
-#         }
-#       }
-#     ],
-#     footnotes_url: "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}fn.html",
-#     footnotes: [
-#       { footnote_num: {
-#           text: ""
-#         }
-#       }
-#     ]
+# {chapter_num: int,
+# translation_url: "",
+# footnotes_url: "",
+# verses:[
+#   {verse_num: int.
+#   verse_text: "",
+#   link_to_footnotes: true || false
 #   }
+# ],
+# footnotes:[
+#   {
+#     associated_verses: [ints],
+#     text: ""
+#   }
+# ]
 #
 # }
