@@ -14,10 +14,10 @@ class SeedsFromMasjidTucson #likely will need to change class name once data is 
     (1..114).to_a.map do |num|
 
 
-      # translation_document = Nokogiri::HTML.parse(open(ch_url_constructor(num)))
-      # footnotes_document = Nokogiri::HTML.parse(open(ch__fn_url_constructor(num)))
+      # chapter_translation_document = Nokogiri::HTML.parse(open(ch_url_constructor(num)))
+      # chapter_footnotes_document = Nokogiri::HTML.parse(open(ch__fn_url_constructor(num)))
 
-      # nokogiri_documents_to_hash(translation_document, footnotes_document)
+      # nokogiri_documents_to_hash(chapter_translation_document, chapter_footnotes_document)
 
 
 
@@ -43,3 +43,25 @@ class SeedsFromMasjidTucson #likely will need to change class name once data is 
     "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}fn.html"
   end
 end
+
+
+
+# { chapter_num: {
+#     translation_url: "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}.html",
+#     verses: [
+#       { verse_num: {
+#           text: "",
+#           link_to_footnotes: true || false
+#         }
+#       }
+#     ],
+#     footnotes_url: "https://www.masjidtucson.org/quran/frames/ch#{chapter_number}fn.html",
+#     footnotes: [
+#       { footnote_num: {
+#           text: ""
+#         }
+#       }
+#     ]
+#   }
+#
+# }
