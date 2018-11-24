@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2018_09_02_214932) do
     t.integer "translation_id"
     t.integer "number"
     t.string "title"
+    t.boolean "requires_addition_of_bismillah"
   end
 
   create_table "translations", force: :cascade do |t|
