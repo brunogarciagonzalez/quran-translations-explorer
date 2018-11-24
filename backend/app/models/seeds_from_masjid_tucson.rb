@@ -4,7 +4,7 @@
 require "byebug"
 require "nokogiri"
 
-class SeedsFromMasjidTucson
+class SeedsFromMasjidTucson #likely will need to change class name once data is localized
 
   def getters_iterator
     # would like to transition from get requests to localized json asap
