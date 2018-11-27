@@ -19,4 +19,4 @@ Via the QueriesController:
 ### Personal Study Space
 
 Authentication via safe password storage (Bcrypt: password hashing function) & Authorization via JSON Web Tokens (JWT):
-* Allow users to log in and store information related to their studies (being purposefully ambiguous, many things planned and am hopeful to make them happen)
+* Allow users to log in and store information related to their studies (being purposefully ambiguous, many things planned and am hopeful to make them happen).
