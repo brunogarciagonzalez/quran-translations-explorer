@@ -21,3 +21,7 @@ Via the QueriesController:
 
 Authentication via safe password storage (Bcrypt: password hashing function) & Authorization via JSON Web Tokens (JWT):
 * Allow users to log in and store information related to their studies (being purposefully ambiguous, many things planned and am hopeful to make them happen).
+
+### Shared Study Space
+
+Produce a shared workspace where a group can do everything an individual user can do privately, but together.
