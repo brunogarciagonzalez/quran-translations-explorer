@@ -12,6 +12,7 @@ Via the TranslationsController:
 
 Via the QueriesController:
 * Serve as a search engine for translations in english of the Quran.
+  * employ multithreading for performance boost.
 * Different search types will have respective controller actions. 
   * Build for single word queries, exact phrase queries, and others.
   * Choose what translations to search through, starting with English.
