@@ -1,0 +1,3 @@
+class VerseNoteHistory < ApplicationRecord
+  
+end

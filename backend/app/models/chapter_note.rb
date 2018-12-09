@@ -1,0 +1,3 @@
+class ChapterNote < ApplicationRecord
+  
+end

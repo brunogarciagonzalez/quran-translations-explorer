@@ -1,0 +1,3 @@
+class UserStudySpace < ApplicationRecord
+  
+end
