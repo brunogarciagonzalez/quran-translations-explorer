@@ -7,4 +7,6 @@ class StudySpace < ApplicationRecord
 
   has_many :verse_notes
   has_many :verse_note_histories, through: :verse_notes
+
+  has_many :announcements
 end
