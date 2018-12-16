@@ -1,4 +1,5 @@
 # seeds
+# TODO: use postgre
 
 Verse.destroy_all
 Chapter.destroy_all
