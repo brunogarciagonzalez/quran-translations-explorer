@@ -1,9 +1,8 @@
 # seeds
 # TODO: use postgre
 
-Verse.destroy_all
-Chapter.destroy_all
-Translation.destroy_all
+
+
 
 puts "**************"
 
@@ -12,8 +11,8 @@ puts "**************"
 # seeder_txts.directory_iterator
 
 # for data of Rashad's translation from masjidtucson.org:
-seeder_masjid_tucson = SeedsFromMasjidTucson.new
-seeder_masjid_tucson.getters_iterator
+test = SeedsFromMasjidTucson.new.getters_iterator
+byebug
 
 puts "** success! **"
 puts "**************"
