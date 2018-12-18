@@ -11,8 +11,7 @@ puts "**************"
 # seeder_txts.directory_iterator
 
 # for data of Rashad's translation from masjidtucson.org:
-test = SeedsFromMasjidTucson.new.getters_iterator
-byebug
-
+# SeedsFromMasjidTucson.new.getters_iterator
+SeedsFromTxts.new.directory_iterator
 puts "** success! **"
 puts "**************"
